@@ -38,19 +38,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //   });
 // });
 
-var data = "<img width=200 height=200 src='https://ss0.baidu.com/7Po3dSag_xI4khGko9WTAnF6hhy/image/h%3D220/sign=3079521078cf3bc7f700caeee101babd/f636afc379310a55e46970e9bf4543a982261059.jpg'></img>"
 
 
-var imgHtml = require("./components/Img");
+// var imgHtml = require("./components/Img");
 
 app.get('/',function(req,res){
-    // StreamCherry.find(function(err,msg){
-    //     res.end(JSON.stringify(msg));
-    // })   
-    res.end(imgHtml);
+    res.end('hello man');
 })
 
-app.listen(process.env.PORT,function(err){
+app.listen('8000',function(err){
     if(err){
         console.log('err');
     }else{
