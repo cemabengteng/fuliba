@@ -4,17 +4,11 @@ var express = require("express");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 var StreamCherry = require("./module/streamCherry.js");
+var mongodb = require('mongoose');
+var config = require('./config.js');
 // var routes = require('./app/routes');
 // var Router = require('react-router');
 
-// var mongose = require("mongoose");
-// mongose.connect('mongodb://localhost/fuliba');
-// mongose.connection.on('open',()=>{
-//     console.log('database connection success');
-// })
-// mongose.connection.on('error',(err)=>{
-//     console.log('database start fail' + err);
-// })
 
 
 var app = express();
@@ -40,16 +34,36 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
-// var imgHtml = require("./components/Img");
-
-app.get('/',function(req,res){
-    res.end('hello man');
+//连接数据库
+mongodb.connect(config.dbCon);
+mongodb.connection.on('open',function(){
+    console.log('database connection success')
+})
+mongodb.connection.on('error',function(err){
+    console.log('database connection err ' + err);
 })
 
-app.listen('8000',function(err){
-    if(err){
+
+var Main = require('./components/Main')
+displayProp(Main);
+
+app.get('/', function (req, res) {
+    res.end(Main.default);
+})
+
+app.listen('8000', function (err) {
+    if (err) {
         console.log('err');
-    }else{
+    } else {
         console.log('server start success');
     }
-}) 
+})
+
+
+function displayProp(obj) {
+    let names = "";
+    for (let name in obj) {
+        names += name + ": " + obj[name] + ", ";
+    }
+    console.log(names);
+}  
